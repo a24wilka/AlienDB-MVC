@@ -115,3 +115,4 @@ C:\Users\Willl\source\repos\AlienDB_MVC\AlienDB_MVC\obj\Debug\net10.0\AlienDB_MV
 C:\Users\Willl\source\repos\AlienDB_MVC\AlienDB_MVC\obj\Debug\net10.0\AlienDB_MVC.genruntimeconfig.cache
 C:\Users\Willl\source\repos\AlienDB_MVC\AlienDB_MVC\obj\Debug\net10.0\ref\AlienDB_MVC.dll
 C:\Users\Willl\source\repos\AlienDB_MVC\AlienDB_MVC\obj\Debug\net10.0\compressed\h05v018lf7-{0}-d431zew561-d431zew561.gz
+C:\Users\Willl\source\repos\AlienDB_MVC\AlienDB_MVC\obj\Debug\net10.0\AlienDB_MVC.sourcelink.json
