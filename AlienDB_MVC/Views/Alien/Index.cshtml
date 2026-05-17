@@ -1,0 +1,146 @@
+﻿@model List<AlienDB_MVC.Models.Alien>
+
+@{
+    // Sidtitel som visas i webbläsaren
+    ViewData["Title"] = "Aliens";
+}
+
+<!-- Rubrik -->
+<div class="page-header mb-4">
+
+    <div>
+
+        <h1 class="page-title">
+            👽 Alien Management
+        </h1>
+
+        <p class="page-subtitle">
+
+            Hantera utomjordiska livsformer,
+            farlighetsgrader och alien-data.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Knapp -->
+<a class="btn btn-success mb-3"
+       asp-action="Create">
+
+    + Skapa ny Alien
+
+</a>
+
+<!-- Sökformulär för aliens -->
+<form asp-action="Index" method="get" class="mb-4">
+
+    <div class="input-group">
+
+        <input type="text"
+               name="search"
+               value="@ViewBag.Search"
+               class="form-control"
+               placeholder="Sök på namn, ras, vapen eller farlighet..." />
+
+        <button type="submit" class="btn btn-info">
+            Sök
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">
+            Rensa
+        </a>
+
+    </div>
+
+</form>
+
+<!-- Bootstrap-tabell för att visa aliens -->
+<table class="table table-dark table-striped">
+
+    <thead>
+
+        <!-- Kolumnrubriker -->
+        <tr>
+            <th>ID</th>
+            <th>Namn</th>
+            <th>Ras</th>
+            <th>Favoritvapen</th>
+            <th>Antal armar</th>
+            <th>Farlighetsgrad</th>
+            <th>Actions</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+        <!-- Loopar igenom alla aliens från modellen -->
+        @foreach (var alien in Model)
+        {
+            <tr>
+
+                <!-- Visar information för varje alien -->
+                <td>@alien.ID</td>
+                <td>@alien.Namn</td>
+                <td>@alien.RasNamn</td>
+                <td>@alien.FavoritVapen</td>
+                <td>@alien.AntalArmar</td>
+                <td>
+
+                    @if (alien.Farlighetsgrad == "Ofarlig")
+                    {
+                        <span class="badge bg-success">
+                            Ofarlig
+                        </span>
+                    }
+                    else if (alien.Farlighetsgrad == "Farlig")
+                    {
+                        <span class="badge bg-warning text-dark">
+                            Farlig
+                        </span>
+                    }
+                    else if (alien.Farlighetsgrad == "Extrem")
+                    {
+                        <span class="badge bg-danger">
+                            Extrem
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">
+                            Okänd
+                        </span>
+                    }
+
+                </td>
+                <td>
+
+                    <a class="icon-action-btn edit-icon"
+                           asp-action="Edit"
+                           asp-route-id="@alien.ID"
+                           title="Redigera">
+
+                        ✏️
+
+                    </a>
+
+                    <a class="icon-action-btn delete-icon"
+                           asp-action="Delete"
+                           asp-route-id="@alien.ID"
+                           onclick="return confirm('Är du säker?');"
+                           title="Ta bort">
+
+                        🗑️
+
+                    </a>
+
+                </td>
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>

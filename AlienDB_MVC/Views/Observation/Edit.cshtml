@@ -1,0 +1,117 @@
+﻿@model AlienDB_MVC.Models.Observation
+
+@{
+    ViewData["Title"] = "Redigera Observation";
+}
+
+<h1>Redigera Observation</h1>
+
+<br />
+
+<form asp-action="Edit" method="post">
+
+    <!-- Dold ID -->
+    <input asp-for="ID" type="hidden" />
+
+    <!-- Datum -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Datum
+        </label>
+
+        <input asp-for="Datum"
+               class="form-control"
+               type="date" />
+
+    </div>
+
+    <!-- Säkerhetsnivå -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Säkerhetsnivå
+        </label>
+
+        <select asp-for="Säkerhet"
+                class="form-select">
+
+            <option value="25">25 - Låg</option>
+            <option value="50">50 - Medel</option>
+            <option value="75">75 - Hög</option>
+            <option value="100">100 - Extrem</option>
+
+        </select>
+
+    </div>
+
+    <!-- Grad -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Grad
+        </label>
+
+        <select asp-for="Grad"
+                class="form-select">
+
+            <option value="1">1 - Låg</option>
+            <option value="2">2 - Normal</option>
+            <option value="3">3 - Hög</option>
+            <option value="4">4 - Kritisk</option>
+
+        </select>
+
+    </div>
+
+    <!-- Handläggare -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Handläggare
+        </label>
+
+        <select asp-for="HandläggareID"
+                asp-items="ViewBag.Agenter"
+                class="form-select">
+        </select>
+
+    </div>
+
+    <!-- Incident -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Incident
+        </label>
+
+        <select asp-for="IncidentID"
+                asp-items="ViewBag.Incidenter"
+                class="form-select">
+        </select>
+
+    </div>
+
+    <!-- Alien -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Alien
+        </label>
+
+        <select asp-for="AlienID"
+                asp-items="ViewBag.Aliens"
+                class="form-select">
+        </select>
+
+    </div>
+
+    <!-- Spara -->
+    <button type="submit"
+            class="btn btn-warning">
+
+        Spara ändringar
+
+    </button>
+
+</form>

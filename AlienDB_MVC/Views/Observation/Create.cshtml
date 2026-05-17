@@ -1,0 +1,132 @@
+﻿@model AlienDB_MVC.Models.Observation
+
+@{
+    // Titel som visas i webbläsaren
+    ViewData["Title"] = "Skapa Observation";
+}
+
+<!-- Rubrik -->
+<h1>Skapa Observation</h1>
+
+<br />
+
+<!-- Formulär för att skapa ny observation -->
+<form asp-action="Create" method="post">
+
+    <!-- Datum -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Datum
+        </label>
+
+        <input asp-for="Datum"
+               class="form-control"
+               type="date" />
+
+    </div>
+
+    <!-- Dropdown för säkerhetsnivå -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Säkerhetsnivå
+        </label>
+
+        <select asp-for="Säkerhet"
+                class="form-select">
+
+            <option value="25">25 - Låg</option>
+            <option value="50">50 - Medel</option>
+            <option value="75">75 - Hög</option>
+            <option value="100">100 - Extrem</option>
+
+        </select>
+
+    </div>
+
+    <!-- Dropdown för grad -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Grad
+        </label>
+
+        <select asp-for="Grad"
+                class="form-select">
+
+            <option value="1">1 - Låg</option>
+            <option value="2">2 - Normal</option>
+            <option value="3">3 - Hög</option>
+            <option value="4">4 - Kritisk</option>
+
+        </select>
+
+    </div>
+
+    <!-- Dropdown för handläggare -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Handläggare
+        </label>
+
+        <select asp-for="HandläggareID"
+                asp-items="ViewBag.Agenter"
+                class="form-select">
+
+            <option value="">
+                Välj agent
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Dropdown för incident -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Incident
+        </label>
+
+        <select asp-for="IncidentID"
+                asp-items="ViewBag.Incidenter"
+                class="form-select">
+
+            <option value="">
+                Välj incident
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Dropdown för alien -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Alien
+        </label>
+
+        <select asp-for="AlienID"
+                asp-items="ViewBag.Aliens"
+                class="form-select">
+
+            <option value="">
+                Välj alien
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Knapp för att spara -->
+    <button type="submit"
+            class="btn btn-success">
+
+        Skapa Observation
+
+    </button>
+
+</form>

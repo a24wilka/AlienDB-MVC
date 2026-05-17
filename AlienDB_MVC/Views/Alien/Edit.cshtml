@@ -1,0 +1,88 @@
+﻿@model AlienDB_MVC.Models.Alien
+
+@{
+    // Sidtitel
+    ViewData["Title"] = "Edit Alien";
+}
+
+<!-- Rubrik -->
+<h1 class="mb-4">✏️ Edit Alien</h1>
+
+<!-- Formulär för att redigera alien -->
+<form asp-action="Edit" method="post">
+
+    <!-- Dold input för ID -->
+    <input asp-for="ID" type="hidden" />
+
+    <!-- Namn -->
+    <div class="mb-3">
+        <label class="form-label">Namn</label>
+
+        <input asp-for="Namn"
+               class="form-control" />
+    </div>
+
+    <!-- Dropdown för alien-ras -->
+    <div class="mb-3">
+
+        <label asp-for="RasID" class="form-label">
+            Ras
+        </label>
+
+        <select asp-for="RasID"
+                asp-items="ViewBag.Raser"
+                class="form-select">
+
+            <option value="">
+                -- Välj ras --
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Favoritvapen -->
+    <div class="mb-3">
+        <label class="form-label">Favoritvapen</label>
+
+        <input asp-for="FavoritVapen"
+               class="form-control" />
+    </div>
+
+    <!-- Antal armar -->
+    <div class="mb-3">
+        <label class="form-label">Antal armar</label>
+
+        <input asp-for="AntalArmar"
+               class="form-control" />
+    </div>
+
+    <!-- Dropdown för farlighetsgrad -->
+    <div class="mb-3">
+
+        <label asp-for="Farlighetsgrad" class="form-label">
+            Farlighetsgrad
+        </label>
+
+        <select asp-for="Farlighetsgrad"
+                class="form-select">
+
+            <option value="">
+                -- Välj farlighetsgrad --
+            </option>
+
+            <option value="Ofarlig">Ofarlig</option>
+            <option value="Farlig">Farlig</option>
+            <option value="Extrem">Extrem</option>
+
+        </select>
+
+    </div>
+
+    <!-- Spara-knapp -->
+    <button type="submit"
+            class="btn btn-warning">
+        Spara ändringar
+    </button>
+
+</form>

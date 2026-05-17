@@ -1,0 +1,75 @@
+﻿@model AlienDB_MVC.Models.Incident
+
+@{
+    ViewData["Title"] = "Redigera Incident";
+}
+
+<!-- Rubrik -->
+<h1>Redigera Incident</h1>
+
+<br />
+
+<!-- Formulär -->
+<form asp-action="Edit" method="post">
+
+    <!-- Dold ID -->
+    <input asp-for="ID" type="hidden" />
+
+    <!-- Namn -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Namn
+        </label>
+
+        <input asp-for="Namn"
+               class="form-control" />
+
+    </div>
+
+    <!-- Plats -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Plats
+        </label>
+
+        <input asp-for="Plats"
+               class="form-control" />
+
+    </div>
+
+    <!-- Region -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Region
+        </label>
+
+        <select asp-for="Region"
+                class="form-select">
+
+            <option value="Sverige">Sverige</option>
+            <option value="Norge">Norge</option>
+            <option value="Finland">Finland</option>
+            <option value="Danmark">Danmark</option>
+            <option value="Norden">Norden</option>
+            <option value="Europa">Europa</option>
+            <option value="Nordamerika">Nordamerika</option>
+            <option value="Asien">Asien</option>
+            <option value="Afrika">Afrika</option>
+            <option value="Okänd">Okänd</option>
+
+        </select>
+
+    </div>
+
+    <!-- Spara -->
+    <button type="submit"
+            class="btn btn-warning">
+
+        Spara ändringar
+
+    </button>
+
+</form>

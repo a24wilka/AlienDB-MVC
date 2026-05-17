@@ -1,0 +1,176 @@
+﻿@model List<AlienDB_MVC.Models.Agent>
+
+@{
+    ViewData["Title"] = "Agenter";
+}
+
+<!-- Rubrik -->
+<div class="page-header mb-4">
+
+    <div>
+
+        <h1 class="page-title">
+            👥 Agent Management
+        </h1>
+
+        <p class="page-subtitle">
+
+            Hantera agenter, roller,
+            regioner och specialiteter.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Knapp -->
+<a class="btn btn-success mb-3"
+       asp-action="Create">
+
+    Skapa Agent
+
+</a>
+
+<div class="search-card">
+
+    <form method="get" asp-action="Index">
+
+        <div class="row mb-3">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Sök agent..." />
+
+            </div>
+
+            <div class="col-auto">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Sök
+
+                </button>
+
+            </div>
+
+            <div class="col-auto">
+
+                <a class="btn btn-secondary"
+                       asp-action="Index">
+
+                    Rensa
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Visar fel om agenten är kopplad till observationer  -->
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+<!-- Agent-tabell -->
+<div class="card shadow-lg border-0 bg-dark text-light p-3">
+
+    <table class="table table-dark table-striped table-hover">
+
+
+    <thead>
+        <tr>
+
+            <th>Namn</th>
+            <th>Nummer</th>
+            <th>Specialitet</th>
+            <th>Roll</th>
+            <th>Region</th>
+            <th>Lön</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.Name</td>
+
+                <td>@item.Nummer</td>
+
+                <td>@item.Specialitet</td>
+
+                <td>
+                    @if (item.Roll == "Gruppledare")
+                    {
+                        <span class="badge bg-primary">Gruppledare</span>
+                    }
+                    else if (item.Roll == "Handläggare")
+                    {
+                        <span class="badge bg-info text-dark">Handläggare</span>
+                    }
+                    else if (item.Roll == "Fältagent")
+                    {
+                        <span class="badge bg-success">Fältagent</span>
+                    }
+                    else if (item.Roll == "Desinformationsspridare")
+                    {
+                        <span class="badge bg-danger">Desinformation</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">@item.Roll</span>
+                    }
+                </td>
+
+                <td>@item.RegionKod</td>
+
+                <td>@item.Lon.ToString("N0") kr</td>
+
+                    <td>
+
+                        <a class="icon-action-btn edit-icon"
+                               asp-action="Edit"
+                               asp-route-id="@item.ID"
+                               title="Redigera">
+
+                            ✏️
+
+                        </a>
+
+                        <a class="icon-action-btn delete-icon"
+                               asp-action="Delete"
+                               asp-route-id="@item.ID"
+                               onclick="return confirm('Är du säker?');"
+                               title="Ta bort">
+
+                            🗑️
+
+                        </a>
+
+                    </td>
+
+                
+
+            </tr>
+        }
+
+    </tbody>
+
+</table>
+
+</div>

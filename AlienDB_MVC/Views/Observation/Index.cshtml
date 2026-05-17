@@ -1,0 +1,148 @@
+﻿@model List<AlienDB_MVC.Models.ObservationDashboard>
+
+@{
+    ViewData["Title"] = "Observation Dashboard";
+}
+
+<!-- Rubrik -->
+<div class="page-header mb-4">
+
+    <div>
+
+        <h1 class="page-title">
+            🔭 Observation Management
+        </h1>
+
+        <p class="page-subtitle">
+
+            Sök, hantera och övervaka observationer,
+            säkerhetsnivåer och rapporterade händelser.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Knapp -->
+<a class="btn btn-success mb-3"
+       asp-action="Create">
+
+    Skapa Observation
+
+</a>
+
+<div class="search-card mb-4">
+
+    <form method="get" asp-action="Index">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Sök observation..." />
+
+            </div>
+
+            <div class="col-auto">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Sök
+
+                </button>
+
+            </div>
+
+            <div class="col-auto">
+
+                <a class="btn btn-secondary"
+                       asp-action="Index">
+
+                    Rensa
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+<!-- Tabell med observationer -->
+<table class="table table-dark table-striped table-hover">
+
+    <thead>
+        <tr>
+
+            <th>Agent</th>
+            <th>Alien</th>
+            <th>Incident</th>
+            <th>Plats</th>
+            <th>Region</th>
+            <th>Operation</th>
+            <th>Datum</th>
+            <th>Säkerhet</th>
+            <th>Grad</th>
+            <th>Action</th>
+
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <!-- Loopar igenom alla observationer -->
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>@item.AgentNamn</td>
+
+                <td>@item.AlienNamn</td>
+
+                <td>@item.IncidentNamn</td>
+
+                <td>@item.Plats</td>
+
+                <td>@item.Region</td>
+
+                <td>@item.OperationKodnamn</td>
+
+                <td>@item.Datum.ToShortDateString()</td>
+
+                <td>@item.Säkerhet</td>
+
+                <td>@item.Grad</td>
+                <td>
+
+                    <a class="icon-action-btn edit-icon"
+                           asp-action="Edit"
+                           asp-route-id="@item.ObservationID"
+                           title="Redigera">
+
+                        ✏️
+
+                    </a>
+
+                    <a class="icon-action-btn delete-icon"
+                           asp-action="Delete"
+                           asp-route-id="@item.ObservationID"
+                           onclick="return confirm('Är du säker på att du vill ta bort observationen?');"
+                           title="Ta bort">
+
+                        🗑️
+
+                    </a>
+
+                </td>
+            </tr>
+        }
+       
+    </tbody>
+
+</table>

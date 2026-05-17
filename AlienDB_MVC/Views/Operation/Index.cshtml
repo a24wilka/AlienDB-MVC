@@ -1,0 +1,146 @@
+﻿@model List<AlienDB_MVC.Models.Operation>
+
+@{
+    ViewData["Title"] = "Operationer";
+}
+
+<!-- Rubrik -->
+<div class="page-header mb-4">
+
+    <div>
+
+        <h1 class="page-title">
+            🚀 Operation Management
+        </h1>
+
+        <p class="page-subtitle">
+
+            Hantera operationer, uppdrag,
+            ledare och aktiva insatser.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Knapp -->
+<a class="btn btn-success mb-3"
+       asp-action="Create">
+
+    Skapa Operation
+
+</a>
+
+<div class="search-card mb-4">
+
+    <form method="get" asp-action="Index">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Sök operation..." />
+
+            </div>
+
+            <div class="col-auto">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Sök
+
+                </button>
+
+            </div>
+
+            <div class="col-auto">
+
+                <a class="btn btn-secondary"
+                       asp-action="Index">
+
+                    Rensa
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<table class="table table-dark table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Kodnamn</th>
+            <th>Startdatum</th>
+            <th>Slutdatum</th>
+            <th>Ledare</th>
+            <th>Incident</th>
+            <th>Success</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Kodnamn</td>
+                <td>@item.Startdatum.ToShortDateString()</td>
+                <td>@(item.Slutdatum.HasValue ? item.Slutdatum.Value.ToShortDateString() : "Pågående")</td>
+                <td>@item.LedareNamn</td>
+                <td>@item.IncidentNamn</td>
+                <td>
+
+                    @if (item.SuccessRate)
+                    {
+                        <span class="status-badge success-badge">
+
+                            Ja
+
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="status-badge danger-badge">
+
+                            Nej
+
+                        </span>
+                    }
+
+                </td>
+
+                <td>
+
+                    <a class="icon-action-btn edit-icon"
+                           asp-action="Edit"
+                           asp-route-id="@item.ID"
+                           title="Redigera">
+
+                        ✏️
+
+                    </a>
+
+                    <a class="icon-action-btn delete-icon"
+                           asp-action="Delete"
+                           asp-route-id="@item.ID"
+                           onclick="return confirm('Är du säker på att du vill ta bort operationen?');"
+                           title="Ta bort">
+
+                        🗑️
+
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

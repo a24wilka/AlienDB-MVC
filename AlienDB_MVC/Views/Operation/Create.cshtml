@@ -1,0 +1,119 @@
+﻿@model AlienDB_MVC.Models.Operation
+
+@{
+    ViewData["Title"] = "Skapa Operation";
+}
+
+<h1>Skapa Operation</h1>
+
+<br />
+
+<form asp-action="Create" method="post">
+
+    <!-- Kodnamn -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Kodnamn
+        </label>
+
+        <input asp-for="Kodnamn"
+               class="form-control" />
+
+    </div>
+
+    <!-- Startdatum -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Startdatum
+        </label>
+
+        <input asp-for="Startdatum"
+               type="date"
+               class="form-control" />
+
+    </div>
+
+    <!-- Slutdatum -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Slutdatum
+        </label>
+
+        <input asp-for="Slutdatum"
+               type="date"
+               class="form-control" />
+
+    </div>
+
+    <!-- Ledare -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Ledare
+        </label>
+
+        <select asp-for="LedareID"
+                asp-items="ViewBag.Agenter"
+                class="form-select">
+
+            <option value="">
+                Välj agent
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Incident -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Incident
+        </label>
+
+        <select asp-for="IncidentID"
+                asp-items="ViewBag.Incidenter"
+                class="form-select">
+
+            <option value="">
+                Välj incident
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Success -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Success
+        </label>
+
+        <select asp-for="SuccessRate"
+                class="form-select">
+
+            <option value="true">
+                Ja
+            </option>
+
+            <option value="false">
+                Nej
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Skapa -->
+    <button type="submit"
+            class="btn btn-success">
+
+        Skapa Operation
+
+    </button>
+
+</form>

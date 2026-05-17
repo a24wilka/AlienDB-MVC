@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - AlienDB</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AlienDB_MVC.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    <!-- Loading Screen -->
+    <div id="loader-wrapper">
+
+        <div class="loader-ring"></div>
+
+        <div class="loader-text">
+
+            INITIALIZING ALIEN DATABASE...
+
+        </div>
+
+    </div>
+
+    <div class="app-layout">
+
+        <!-- SIDOMENY -->
+        <aside class="sidebar">
+
+            <a class="sidebar-logo"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                👽 Alien<span>DB</span>
+
+            </a>
+
+            <nav class="sidebar-nav">
+
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active-link" : "")"
+                       asp-controller="Home"
+                       asp-action="Index">
+                    🏠 Dashboard
+                </a>
+
+                <div class="sidebar-label">
+                    HUVUDMENY
+                </div>
+
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Agent" ? "active-link" : "")"
+                       asp-controller="Agent"
+                       asp-action="Index">
+                    👥 Agenter
+                </a>
+
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Operation" ? "active-link" : "")"
+                       asp-controller="Operation"
+                       asp-action="Index">
+                    🎯 Operationer
+                </a>
+
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Incident" ? "active-link" : "")"
+                       asp-controller="Incident"
+                       asp-action="Index">
+                    🛡️ Incidenter
+                </a>
+
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Alien" ? "active-link" : "")"
+                       asp-controller="Alien"
+                       asp-action="Index">
+                    👽 Aliens
+                </a>
+
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Observation" ? "active-link" : "")"
+                       asp-controller="Observation"
+                       asp-action="Index">
+                    🔭 Observationer
+                </a>
+
+                <div class="sidebar-label">
+                    SYSTEM
+                </div>
+
+                <a href="#">
+                    🟢 Systemstatus
+                </a>
+
+                <a href="#">
+                    📊 Statistik
+                </a>
+
+            </nav>
+
+            <div class="system-card">
+
+                <h6>Systemstatus</h6>
+
+                <p class="online-dot">
+                    ● Online
+                </p>
+
+                <div class="system-row">
+                    <span>Server</span>
+                    <span>AlienDB-01</span>
+                </div>
+
+                <div class="system-row">
+                    <span>Signal</span>
+                    <span class="pulse-text">
+                        Live Sync
+                    </span>
+                </div>
+
+                <div class="mini-signal">
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+        <!-- HUVUDYTA -->
+        <div class="main-area">
+
+            <header class="topbar">
+                <span class="topbar-title">
+                    @ViewData["Title"]
+                </span>
+
+                <div class="topbar-right">
+
+                    <span id="liveClock" class="live-clock">
+                        --:--:--
+                    </span>
+
+                    <span class="topbar-user">
+                        Admin ▾
+                    </span>
+
+                </div>
+            </header>
+
+            <main class="content-area">
+                @RenderBody()
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+   
+    <script>
+
+        // Loading screen
+        window.addEventListener('load', () => {
+
+        const loader =
+        document.getElementById('loader-wrapper');
+
+        setTimeout(() => {
+
+        loader.classList.add('hide');
+
+        }, 450);
+
+        });
+
+        // Live clock
+        function updateClock() {
+
+        const clock =
+        document.getElementById('liveClock');
+
+        const now =
+        new Date();
+
+        clock.innerHTML =
+        now.toLocaleTimeString('sv-SE');
+        }
+
+        // Start clock
+        updateClock();
+
+        setInterval(updateClock, 1000);
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,509 @@
+﻿@model AlienDB_MVC.Models.DashboardModel
+
+@{
+    // Sidtitel som visas i webbläsaren
+    ViewData["Title"] = "Alien Dashboard";
+}
+
+<!-- Hero-sektion / startsida -->
+<div class="dashboard-hero text-center mt-5">
+
+    <!-- Dashboard titel -->
+    <div class="dashboard-title-wrapper">
+
+        <h1 class="dashboard-title">
+
+            👽 Alien Command Center
+
+        </h1>
+
+        <p class="dashboard-subtitle">
+
+            Övervakning av agenter, incidenter,
+            operationer och utomjordiska hot.
+
+        </p>
+
+    </div>
+
+    <!-- Kort beskrivning -->
+    <p class="lead mt-3">
+
+        Hemligt system för agenter, operationer,
+        incidenter och utomjordiska livsformer.
+
+    </p>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions mt-5">
+
+        <!-- Ny Agent -->
+        <a class="quick-action-btn"
+               asp-controller="Agent"
+               asp-action="Create">
+
+            <span>👥</span>
+
+            Ny Agent
+
+        </a>
+
+        <!-- Ny Alien -->
+        <a class="quick-action-btn"
+               asp-controller="Alien"
+               asp-action="Create">
+
+            <span>👽</span>
+
+            Ny Alien
+
+        </a>
+
+        <!-- Ny Operation -->
+        <a class="quick-action-btn"
+               asp-controller="Operation"
+               asp-action="Create">
+
+            <span>🚀</span>
+
+            Ny Operation
+
+        </a>
+
+        <!-- Ny Incident -->
+        <a class="quick-action-btn"
+               asp-controller="Incident"
+               asp-action="Create">
+
+            <span>⚠️</span>
+
+            Ny Incident
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- Dashboard Grid -->
+<div class="dashboard-grid mt-5">
+
+    <!-- Agenter -->
+    <div class="dashboard-widget premium-widget">
+
+        <div class="widget-top">
+
+            <div class="widget-icon">
+                👥
+            </div>
+
+            <span class="widget-status online">
+                Online
+            </span>
+
+        </div>
+
+        <div class="widget-info">
+
+            <p>Agenter</p>
+
+            <h3>@Model.AgentCount</h3>
+
+            <span class="widget-trend">
+                Aktiva i systemet
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- Aliens -->
+    <div class="dashboard-widget premium-widget">
+
+        <div class="widget-top">
+
+            <div class="widget-icon">
+                👽
+            </div>
+
+            <span class="widget-status alert">
+                Monitor
+            </span>
+
+        </div>
+
+        <div class="widget-info">
+
+            <p>Aliens</p>
+
+            <h3>@Model.AlienCount</h3>
+
+            <span class="widget-trend">
+                Registrerade livsformer
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- Operationer -->
+    <div class="dashboard-widget premium-widget">
+
+        <div class="widget-top">
+
+            <div class="widget-icon">
+                🚀
+            </div>
+
+            <span class="widget-status active">
+                Active
+            </span>
+
+        </div>
+
+        <div class="widget-info">
+
+            <p>Operationer</p>
+
+            <h3>@Model.OperationCount</h3>
+
+            <span class="widget-trend">
+                Uppdrag i databasen
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- Incidenter -->
+    <div class="dashboard-widget premium-widget">
+
+        <div class="widget-top">
+
+            <div class="widget-icon">
+                ⚠️
+            </div>
+
+            <span class="widget-status warning">
+                Watch
+            </span>
+
+        </div>
+
+        <div class="widget-info">
+
+            <p>Incidenter</p>
+
+            <h3>@Model.IncidentCount</h3>
+
+            <span class="widget-trend">
+                Säkerhetsärenden
+            </span>
+
+        </div>
+
+    </div>
+
+    <!-- Observationer -->
+    <div class="dashboard-widget premium-widget">
+
+        <div class="widget-top">
+
+            <div class="widget-icon">
+                🔭
+            </div>
+
+            <span class="widget-status scan">
+                Scan
+            </span>
+
+        </div>
+
+        <div class="widget-info">
+
+            <p>Observationer</p>
+
+            <h3>@Model.ObservationCount</h3>
+
+            <span class="widget-trend">
+                Senaste rapporter
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Senaste observationer -->
+<div class="card mt-5 p-4">
+
+    <h2 class="mb-4">🔭 Senaste observationer</h2>
+
+    <table class="table table-dark table-striped table-hover">
+
+        <thead>
+            <tr>
+                <th>Agent</th>
+                <th>Alien</th>
+                <th>Incident</th>
+                <th>Operation</th>
+                <th>Datum</th>
+                <th>Säkerhet</th>
+                <th>Grad</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.LatestObservations)
+            {
+                <tr>
+                    <td>@item.AgentNamn</td>
+                    <td>@item.AlienNamn</td>
+                    <td>@item.IncidentNamn</td>
+                    <td>@item.OperationKodnamn</td>
+                    <td>@item.Datum.ToShortDateString()</td>
+                    <td>@item.Säkerhet</td>
+                    <td>@item.Grad</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- Aktiva operationer -->
+<div class="card mt-5 p-4">
+
+    <h2 class="mb-4">🚀 Aktiva operationer</h2>
+
+    <table class="table table-dark table-striped table-hover">
+
+        <thead>
+            <tr>
+                <th>Kodnamn</th>
+                <th>Ledare</th>
+                <th>Incident</th>
+                <th>Startdatum</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var operation in Model.ActiveOperations)
+            {
+                <tr>
+
+                    <td>
+                        @operation.Kodnamn
+                    </td>
+
+                    <td>
+                        @operation.LedareNamn
+                    </td>
+
+                    <td>
+                        @operation.IncidentNamn
+                    </td>
+
+                    <td>
+                        @operation.Startdatum.ToShortDateString()
+                    </td>
+
+                    <td>
+
+                        @if (operation.SuccessRate)
+                        {
+                            <span class="badge bg-success">
+                                Aktiv
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Pågår
+                            </span>
+                        }
+
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- Statistikgraf -->
+<div class="card mt-5 p-4">
+
+    <h2 class="mb-4">📊 Systemstatistik</h2>
+
+    <canvas id="statsChart" height="120"></canvas>
+
+</div>
+
+
+
+<!-- Senaste aktivitet -->
+<div class="card mt-5 p-4">
+
+    <h2 class="mb-4">⚡ Senaste aktivitet</h2>
+
+    <div class="activity-feed">
+
+        @foreach (var log in Model.LatestLogs)
+        {
+            <div class="activity-item">
+
+                <div class="activity-dot"></div>
+
+                <div class="activity-content">
+
+                    <h6>
+                        @log.Händelse
+                    </h6>
+
+                    <p>
+                        Tabell:
+                        @log.TabellNamn
+                    </p>
+
+                    <span>
+                        @log.Tid
+                    </span>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<!-- Statistikgraf för dashboarden -->
+@section Scripts {
+
+    <script>
+
+        const ctx =
+            document.getElementById('statsChart');
+
+        new Chart(ctx, {
+
+            type: 'bar',
+
+            data: {
+
+                labels: [
+                    'Agenter',
+                    'Aliens',
+                    'Operationer',
+                    'Incidenter',
+                    'Observationer'
+                ],
+
+                datasets: [{
+
+                    label: 'Databasstatistik',
+
+                    data: [
+                        @Model.AgentCount,
+                        @Model.AlienCount,
+                        @Model.OperationCount,
+                        @Model.IncidentCount,
+                        @Model.ObservationCount
+                    ],
+
+                    borderWidth: 2,
+
+                    borderRadius: 12,
+
+                    backgroundColor: [
+                        'rgba(59,130,246,0.7)',
+                        'rgba(16,185,129,0.7)',
+                        'rgba(245,158,11,0.7)',
+                        'rgba(239,68,68,0.7)',
+                        'rgba(168,85,247,0.7)'
+                    ],
+
+                    borderColor: [
+                        '#60a5fa',
+                        '#34d399',
+                        '#fbbf24',
+                        '#f87171',
+                        '#c084fc'
+                    ]
+
+                }]
+            },
+
+                options: {
+
+        responsive: true,
+
+        animation: {
+
+            duration: 2200,
+
+            easing: 'easeOutQuart'
+        },
+
+        plugins: {
+
+            legend: {
+                display: false
+            }
+        },
+
+                scales: {
+
+                    y: {
+
+                        ticks: {
+                            color: '#cbd5e1'
+                        },
+
+                        grid: {
+                            color: 'rgba(255,255,255,0.06)'
+                        }
+                    },
+
+                    x: {
+
+                        ticks: {
+                            color: '#cbd5e1'
+                        },
+
+                        grid: {
+                            color: 'rgba(255,255,255,0.03)'
+                        }
+                    }
+                }
+            }
+        });
+
+
+    </script>
+}
+<!-- Knapp för att navigera till agentsidan -->
+<div class="text-center mt-5">
+
+    <a class="btn btn-outline-info btn-lg me-3"
+           asp-controller="Agent"
+           asp-action="Index">
+        Visa Agenter
+    </a>
+
+    <a class="btn btn-outline-success btn-lg"
+           asp-controller="Alien"
+           asp-action="Index">
+        Visa Aliens
+    </a>
+
+</div>

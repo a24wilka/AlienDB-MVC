@@ -1,0 +1,37 @@
+﻿@model AlienDB_MVC.Models.Alien
+
+@{
+    // Sidtitel
+    ViewData["Title"] = "Delete Alien";
+}
+
+<h1 class="mb-4 text-danger">🗑️ Delete Alien</h1>
+
+<p>Är du säker på att du vill ta bort denna alien?</p>
+
+<div class="card bg-dark text-light border-danger mb-4">
+    <div class="card-body">
+
+        <p><strong>ID:</strong> @Model.ID</p>
+        <p><strong>Namn:</strong> @Model.Namn</p>
+        <p><strong>Ras ID:</strong> @Model.RasID</p>
+        <p><strong>Favoritvapen:</strong> @Model.FavoritVapen</p>
+        <p><strong>Antal armar:</strong> @Model.AntalArmar</p>
+        <p><strong>Farlighetsgrad:</strong> @Model.Farlighetsgrad</p>
+
+    </div>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+
+    <input type="hidden" name="id" value="@Model.ID" />
+
+    <button type="submit" class="btn btn-danger">
+        Ja, ta bort
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        Avbryt
+    </a>
+
+</form>

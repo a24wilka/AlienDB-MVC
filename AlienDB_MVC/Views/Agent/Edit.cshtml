@@ -1,0 +1,135 @@
+﻿@model AlienDB_MVC.Models.Agent
+
+@{
+    ViewData["Title"] = "Redigera Agent";
+}
+
+<!-- Rubrik -->
+<h1>Redigera Agent</h1>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
+<br />
+
+<form asp-action="Edit" method="post">
+
+    <!-- Dold ID -->
+    <input asp-for="ID" type="hidden" />
+
+    <!-- Namn -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Namn
+        </label>
+
+        <input asp-for="Name"
+               class="form-control" />
+
+    </div>
+
+    <!-- Nummer -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Agentnummer
+        </label>
+
+        <input asp-for="Nummer"
+               class="form-control" />
+
+    </div>
+
+    <!-- Specialitet -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Specialitet
+        </label>
+
+        <select asp-for="Specialitet"
+                class="form-select">
+
+            <option value="Undercover">Undercover</option>
+            <option value="Teknik">Teknik</option>
+            <option value="Spaning">Spaning</option>
+            <option value="Förhör">Förhör</option>
+            <option value="Hacking">Hacking</option>
+            <option value="Analys">Analys</option>
+            <option value="Infiltration">Infiltration</option>
+            <option value="Säkerhet">Säkerhet</option>
+
+        </select>
+
+    </div>
+
+    <!-- Roll -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Roll
+        </label>
+
+        <select asp-for="Roll"
+                class="form-select">
+
+            <option value="Gruppledare">Gruppledare</option>
+            <option value="Handläggare">Handläggare</option>
+            <option value="Fältagent">Fältagent</option>
+            <option value="Desinformationsspridare">
+                Desinformationsspridare
+            </option>
+
+        </select>
+
+    </div>
+
+    <!-- Region -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Region
+        </label>
+
+        <select asp-for="RegionKod"
+                class="form-select">
+
+            <option value="SE">Sverige</option>
+            <option value="NO">Norge</option>
+            <option value="FI">Finland</option>
+            <option value="DK">Danmark</option>
+            <option value="EU">Europa</option>
+            <option value="AS">Asien</option>
+            <option value="NA">Nordamerika</option>
+            <option value="OK">Okänd</option>
+
+        </select>
+
+    </div>
+
+    <!-- Lön -->
+    <div class="mb-3">
+
+        <label class="form-label">
+            Lön
+        </label>
+
+        <input asp-for="Lon"
+               class="form-control" />
+
+    </div>
+
+    <!-- Spara -->
+    <button type="submit"
+            class="btn btn-warning">
+
+        Spara ändringar
+
+    </button>
+
+</form>

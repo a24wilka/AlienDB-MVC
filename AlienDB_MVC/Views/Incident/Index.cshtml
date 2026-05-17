@@ -1,0 +1,122 @@
+﻿@model List<AlienDB_MVC.Models.Incident>
+
+@{
+    ViewData["Title"] = "Incidenter";
+}
+
+<!-- Rubrik -->
+<div class="page-header mb-4">
+
+    <div>
+
+        <h1 class="page-title">
+            ⚠️ Incident Management
+        </h1>
+
+        <p class="page-subtitle">
+
+            Hantera incidenter, regioner,
+            rapporter och säkerhetsärenden.
+
+        </p>
+
+    </div>
+
+</div>
+
+<!-- Knapp för att skapa ny incident -->
+<a class="btn btn-success mb-3"
+       asp-action="Create">
+    Skapa Incident
+</a>
+<div class="search-card mb-4">
+
+    <form method="get" asp-action="Index">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Sök incident..." />
+
+            </div>
+
+            <div class="col-auto">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Sök
+
+                </button>
+
+            </div>
+
+            <div class="col-auto">
+
+                <a class="btn btn-secondary"
+                       asp-action="Index">
+
+                    Rensa
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+<!-- Tabell med incidenter -->
+<table class="table table-dark table-striped table-hover">
+
+    <thead>
+        <tr>
+            <th>Namn</th>
+            <th>Plats</th>
+            <th>Region</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Namn</td>
+                <td>@item.Plats</td>
+                <td>@item.Region</td>
+
+                    <td>
+
+                        <a class="icon-action-btn edit-icon"
+                               asp-action="Edit"
+                               asp-route-id="@item.ID"
+                               title="Redigera">
+
+                            ✏️
+
+                        </a>
+
+                        <a class="icon-action-btn delete-icon"
+                               asp-action="Delete"
+                               asp-route-id="@item.ID"
+                               onclick="return confirm('Är du säker på att du vill ta bort incidenten?');"
+                               title="Ta bort">
+
+                            🗑️
+
+                        </a>
+
+                    </td>
+            </tr>
+        }
+
+    </tbody>
+
+</table>
