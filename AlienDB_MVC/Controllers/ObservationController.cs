@@ -11,10 +11,19 @@ namespace AlienDB_MVC.Controllers
         // Anslutning till MySQL-databasen
         string connectionString =
       "server=localhost;database=alien_db;user=wkabuye;password=Willis123!;";
-
+        
+        // =========================================
+        // INDEX - GET
+        // =========================================
         // Hämtar dashboard-data från databasen
         public IActionResult Index(string search)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             // Lista som ska innehålla observationerna
             List<ObservationDashboard> dashboard = new();
 
@@ -94,90 +103,89 @@ namespace AlienDB_MVC.Controllers
             return View(dashboard);
         }
 
+        // =========================================
+        // CREATE - GET
+        // =========================================
         // Visar formuläret för att skapa en ny observation
         public IActionResult Create()
         {
-            // Laddar dropdown-listor för agenter, incidenter och aliens
-            LoadDropdowns();
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
-            // Visar Create-vyn
+            // Bara Commander/Admin får skapa
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
+            LoadDropdowns();
             return View();
         }
-
-        // Sparar observation i databasen
+        // =========================================
+        // CREATE - POST
+        // =========================================
         [HttpPost]
         public IActionResult Create(Observation observation)
         {
-            using (MySqlConnection conn =
-                   new MySqlConnection(connectionString))
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            // Bara Commander/Admin får skapa
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 conn.Open();
 
                 string query = @"
-            INSERT INTO Observationer
-            (Datum, Säkerhet, Grad,
-             HandläggareID, IncidentID, AlienID)
+                    INSERT INTO Observationer
+                    (Datum, Säkerhet, Grad, HandläggareID, IncidentID, AlienID)
+                    VALUES
+                    (@Datum, @Säkerhet, @Grad, @HandläggareID, @IncidentID, @AlienID)
+                ";
 
-            VALUES
-            (@Datum, @Säkerhet, @Grad,
-             @HandläggareID, @IncidentID, @AlienID)
-        ";
+                MySqlCommand cmd = new MySqlCommand(query, conn);
 
-                MySqlCommand cmd =
-                    new MySqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@Datum",
-                    observation.Datum);
-
-                cmd.Parameters.AddWithValue("@Säkerhet",
-                    observation.Säkerhet);
-
-                cmd.Parameters.AddWithValue("@Grad",
-                    observation.Grad);
-
-                cmd.Parameters.AddWithValue("@HandläggareID",
-                    observation.HandläggareID);
-
-                cmd.Parameters.AddWithValue("@IncidentID",
-                    observation.IncidentID);
-
-                cmd.Parameters.AddWithValue("@AlienID",
-                    observation.AlienID);
-
+                cmd.Parameters.AddWithValue("@Datum", observation.Datum);
+                cmd.Parameters.AddWithValue("@Säkerhet", observation.Säkerhet);
+                cmd.Parameters.AddWithValue("@Grad", observation.Grad);
+                cmd.Parameters.AddWithValue("@HandläggareID", observation.HandläggareID);
+                cmd.Parameters.AddWithValue("@IncidentID", observation.IncidentID);
+                cmd.Parameters.AddWithValue("@AlienID", observation.AlienID);
                 cmd.ExecuteNonQuery();
             }
 
             return RedirectToAction("Index");
         }
 
-        // Tar bort observation
-        public IActionResult Delete(int id)
+
+        // =========================================
+        // EDIT - GET
+        // =========================================
+        // Visar vald observation för redigering
+        public IActionResult Edit(int id)
         {
-            using (MySqlConnection conn =
-                   new MySqlConnection(connectionString))
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
             {
-                conn.Open();
-
-                string query = @"
-            DELETE FROM Observationer
-            WHERE ID = @ID
-        ";
-
-                MySqlCommand cmd =
-                    new MySqlCommand(query, conn);
-
-                cmd.Parameters.AddWithValue("@ID", id);
-
-                cmd.ExecuteNonQuery();
+                return RedirectToAction("Index", "Login");
             }
 
-            return RedirectToAction("Index");
-        }
-
-       
-// Visar vald observation för redigering
-public IActionResult Edit(int id)
-        {
+            // Bara Commander/Admin får redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
             Observation observation = new();
 
             using (MySqlConnection conn =
@@ -231,10 +239,26 @@ public IActionResult Edit(int id)
             return View(observation);
         }
 
+        // =========================================
+        // EDIT - POST
+        // =========================================
         // Sparar ändringar för observation
         [HttpPost]
         public IActionResult Edit(Observation observation)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             using (MySqlConnection conn =
                    new MySqlConnection(connectionString))
             {
@@ -269,8 +293,48 @@ public IActionResult Edit(int id)
             return RedirectToAction("Index");
         }
 
+        // =========================================
+        // DELETE - GET
+        // =========================================
+        // Tar bort observation
+        public IActionResult Delete(int id)
+        {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
 
+            // Bara Admin får ta bort
+            if (HttpContext.Session.GetString("Role") != "Admin")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
 
+            using (MySqlConnection conn =
+                   new MySqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = @"
+    DELETE FROM Observationer
+    WHERE ID = @ID
+";
+
+                MySqlCommand cmd =
+                    new MySqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@ID", id);
+
+                cmd.ExecuteNonQuery();
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        // =========================================
+        // DROPDOWN
+        // =========================================
 
         // Laddar dropdown-data
         private void LoadDropdowns()

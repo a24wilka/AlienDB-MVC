@@ -1,0 +1,74 @@
+﻿@{
+    // Titel som visas i webbläsaren
+    ViewData["Title"] = "Alien Login";
+}
+
+<!-- Login container -->
+<div class="login-container">
+
+    <!-- Login card -->
+    <div class="login-card">
+
+        <!-- Header -->
+        <div class="login-header">
+
+            <h1>👽 Alien Command</h1>
+
+            <p>
+                Classified Access Only
+            </p>
+
+        </div>
+
+        <!-- Felmeddelande vid fel login -->
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger text-center">
+                @ViewBag.Error
+            </div>
+        }
+
+        <!-- Login-formulär -->
+        <form method="post">
+
+            <!-- Username -->
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Agent ID
+                </label>
+
+                <input type="text"
+                       name="username"
+                       class="form-control"
+                       placeholder="Enter Agent ID..." />
+
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+
+                <label class="form-label">
+                    Password
+                </label>
+
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       placeholder="Enter Password..." />
+
+            </div>
+
+            <!-- Login-knapp -->
+            <button type="submit"
+                    class="btn btn-success w-100">
+
+                🔐 Access Database
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

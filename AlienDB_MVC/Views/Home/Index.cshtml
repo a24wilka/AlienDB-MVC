@@ -85,10 +85,16 @@
 
 </div>
 
-<!-- Dashboard Grid -->
-<div class="dashboard-grid mt-5">
+<!-- Command Center -->
+<div class="dashboard-section mt-5">
 
-    <!-- Agenter -->
+    <h2 class="section-title">
+        🚀 Command Center
+    </h2>
+
+    <div class="dashboard-grid">
+
+        <!-- Agenter -->
     <div class="dashboard-widget premium-widget">
 
         <div class="widget-top">
@@ -233,7 +239,39 @@
 
     </div>
 
+    <!-- Escape Alerts -->
+    <div class="dashboard-widget premium-widget">
+
+        <div class="widget-top">
+
+            <div class="widget-icon">
+                🚨
+            </div>
+
+            <span class="widget-status alert">
+                Alert
+            </span>
+
+        </div>
+
+        <div class="widget-info">
+
+            <p>Escape Alerts</p>
+
+            <h3>@Model.EscapeAlertCount</h3>
+
+            <span class="widget-trend">
+                Aktiva undanflykter
+            </span>
+
+        </div>
+
+    </div>
+
 </div>
+
+</div>
+
 
 <!-- Senaste observationer -->
 <div class="card mt-5 p-4">
@@ -376,6 +414,78 @@
                     <span>
                         @log.Tid
                     </span>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+<!-- Galactic Media -->
+<div class="card mt-5 p-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <h2>📰 Galactic Media</h2>
+
+        <a asp-controller="Media"
+               asp-action="Index"
+               class="btn btn-outline-info">
+
+            Visa Alla
+
+        </a>
+
+    </div>
+
+    <div class="row">
+
+        @foreach (var media in Model.LatestMedia)
+        {
+            <div class="col-md-4 mb-3">
+
+                <div class="premium-widget h-100">
+
+                    <div class="widget-top">
+
+                        <div class="widget-icon">
+
+                            @if (media.Typ == "TV")
+                            {
+                                <span>📺</span>
+                            }
+                            else if (media.Typ == "Webb")
+                            {
+                                <span>🌐</span>
+                            }
+                            else if (media.Typ == "Tidning")
+                            {
+                                <span>📰</span>
+                            }
+                            else
+                            {
+                                <span>📻</span>
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <div class="widget-info">
+
+                        <p>@media.Titel</p>
+
+                        <h5>@media.Ägare</h5>
+
+                        <span class="widget-trend">
+                            Credibility:
+                            @media.Trovärdighet / 10
+                        </span>
+
+                    </div>
 
                 </div>
 

@@ -21,6 +21,12 @@ namespace AlienDB_MVC.Controllers
         // Visar lista över aliens + sökfunktion
         public IActionResult Index(string search)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             List<Alien> aliens = new List<Alien>();
 
             using var conn = _db.GetConnection();
@@ -86,10 +92,25 @@ namespace AlienDB_MVC.Controllers
             return View(aliens);
         }
 
-       
+        // =========================================
+        // CREATE - GET
+        // =========================================
         // Visar formulär för att skapa ny alien
         public IActionResult Create()
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             // Lista för alla raser
             List<Ras> raser = new List<Ras>();
 
@@ -117,10 +138,27 @@ namespace AlienDB_MVC.Controllers
             return View();
         }
 
+        // =========================================
+        // CREATE - POST
+        // =========================================
         // Sparar ny alien i databasen
         [HttpPost]
         public IActionResult Create(Alien alien)
         {
+            // Kontroll om användaren är inloggad
+            // Bara Commander/Admin får skapa
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             using var conn = _db.GetConnection();
             conn.Open();
 
@@ -144,9 +182,26 @@ namespace AlienDB_MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        // =========================================
+        // EDIT - GET
+        // =========================================
+
         // Visar formulär för att redigera alien
         public IActionResult Edit(int id)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             Alien alien = new Alien();
 
             using var conn = _db.GetConnection();
@@ -213,23 +268,41 @@ namespace AlienDB_MVC.Controllers
             return View(alien);
         }
 
+        // =========================================
+        // EDIT - POST
+        // =========================================
+
         // Sparar ändringar för alien
         [HttpPost]
         public IActionResult Edit(Alien alien)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             using var conn = _db.GetConnection();
+
             conn.Open();
 
             string sql = @"
-                UPDATE Aliens
-                SET
-                    Namn = @Namn,
-                    RasID = @RasID,
-                    FavoritVapen = @FavoritVapen,
-                    AntalArmar = @AntalArmar,
-                    Farlighetsgrad = @Farlighetsgrad
-                WHERE ID = @ID
-            ";
+        UPDATE Aliens
+        SET
+            Namn = @Namn,
+            RasID = @RasID,
+            FavoritVapen = @FavoritVapen,
+            AntalArmar = @AntalArmar,
+            Farlighetsgrad = @Farlighetsgrad
+        WHERE ID = @ID
+    ";
 
             using var cmd = new MySqlCommand(sql, conn);
 
@@ -245,9 +318,25 @@ namespace AlienDB_MVC.Controllers
             return RedirectToAction("Index");
         }
 
+        // =========================================
+        // DELETE - GET
+        // =========================================
+
         // Visar bekräftelsesida för att ta bort alien
         public IActionResult Delete(int id)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Admin får ta bort
+            if (HttpContext.Session.GetString("Role") != "Admin")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             Alien alien = new Alien();
 
             using var conn = _db.GetConnection();
@@ -288,28 +377,49 @@ namespace AlienDB_MVC.Controllers
             return View(alien);
         }
 
+        // =========================================
+        // DELETE - POST
+        // =========================================
+
         // Tar bort alien från databasen
         [HttpPost]
         public IActionResult DeleteConfirmed(int id)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Admin får ta bort
+            if (HttpContext.Session.GetString("Role") != "Admin")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             using var conn = _db.GetConnection();
+
             conn.Open();
 
             // Tar först bort kopplade undanflykter
-            string sqlUndanflykt = "DELETE FROM Undanflykt WHERE AlienID = @ID";
+            string sqlUndanflykt =
+                "DELETE FROM Undanflykt WHERE AlienID = @ID";
 
             using (var cmd = new MySqlCommand(sqlUndanflykt, conn))
             {
                 cmd.Parameters.AddWithValue("@ID", id);
+
                 cmd.ExecuteNonQuery();
             }
 
             // Tar sedan bort alien
-            string sqlAlien = "DELETE FROM Aliens WHERE ID = @ID";
+            string sqlAlien =
+                "DELETE FROM Aliens WHERE ID = @ID";
 
             using (var cmd = new MySqlCommand(sqlAlien, conn))
             {
                 cmd.Parameters.AddWithValue("@ID", id);
+
                 cmd.ExecuteNonQuery();
             }
 

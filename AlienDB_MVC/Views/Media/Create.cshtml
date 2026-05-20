@@ -1,0 +1,166 @@
+﻿@model AlienDB_MVC.Models.Media
+
+@{
+    ViewData["Title"] = "Create Media";
+}
+
+<div class="page-header">
+
+    <h1 class="page-title">
+        📰 Skapa Media
+    </h1>
+
+    <p class="page-subtitle">
+        Registrera en ny intergalaktisk nyhetskanal.
+    </p>
+
+</div>
+
+<div class="premium-widget">
+
+    <form asp-action="Create" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Titel</label>
+
+            <input asp-for="Titel"
+                   class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Typ</label>
+
+            <select asp-for="Typ"
+                    class="form-select">
+
+                <option>TV</option>
+                <option>Webb</option>
+                <option>Tidning</option>
+                <option>Radio</option>
+
+            </select>
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Språk
+            </label>
+
+            <select asp-for="Språk"
+                    class="form-select">
+
+                <option value="Universal Basic">Universal Basic</option>
+                <option value="Galaktiska">Galaktiska</option>
+                <option value="Andromedan">Andromedan</option>
+                <option value="Xenomorphic">Xenomorphic</option>
+                <option value="Reticulan">Reticulan</option>
+                <option value="Draconian">Draconian</option>
+                <option value="Asari">Asari</option>
+                <option value="Nordic Standard">Nordic Standard</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Ägare
+            </label>
+
+            <select asp-for="Ägare"
+                    class="form-select">
+
+                <option value="Zara MediaCorp">Zara MediaCorp</option>
+                <option value="AlienVision">AlienVision</option>
+                <option value="Blip Studios">Blip Studios</option>
+                <option value="Nova Network">Nova Network</option>
+                <option value="Predax Media">Predax Media</option>
+                <option value="Grey Intelligence">Grey Intelligence</option>
+                <option value="Alliance News">Alliance News</option>
+                <option value="Pleiadian Council">Pleiadian Council</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Land / Planet
+            </label>
+
+            <select asp-for="Land"
+                    class="form-select">
+
+                <option value="Marskolonin">Marskolonin</option>
+                <option value="Andromeda">Andromeda</option>
+                <option value="Kepler-22b">Kepler-22b</option>
+                <option value="Titan">Titan</option>
+                <option value="LV-426">LV-426</option>
+                <option value="Zeta Reticuli">Zeta Reticuli</option>
+                <option value="Draconis">Draconis</option>
+                <option value="Pleiades">Pleiades</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Trovärdighet (1-10)
+            </label>
+
+            <select asp-for="Trovärdighet"
+                    class="form-select">
+
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+
+            </select>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label class="form-label">
+                Status
+            </label>
+
+            <select asp-for="Aktiv"
+                    class="form-select">
+
+                <option value="true">✅ Aktiv</option>
+                <option value="false">❌ Inaktiv</option>
+
+            </select>
+
+        </div>
+
+        <button type="submit"
+                class="btn btn-success">
+
+            💾 Spara Media
+
+        </button>
+
+        <a asp-action="Index"
+               class="btn btn-secondary">
+
+            Tillbaka
+
+        </a>
+
+    </form>
+
+</div>

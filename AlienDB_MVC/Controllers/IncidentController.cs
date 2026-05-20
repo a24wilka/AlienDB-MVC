@@ -16,6 +16,12 @@ namespace AlienDB_MVC.Controllers
         // =========================================
         public IActionResult Index(string search)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             // Lista med incidenter
             List<Incident> incidenter = new();
 
@@ -73,6 +79,19 @@ namespace AlienDB_MVC.Controllers
         // Visar formuläret
         public IActionResult Create()
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa/redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             return View();
         }
 
@@ -84,6 +103,19 @@ namespace AlienDB_MVC.Controllers
         [HttpPost]
         public IActionResult Create(Incident incident)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa/redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             using (MySqlConnection conn =
                    new MySqlConnection(connectionString))
             {
@@ -122,6 +154,19 @@ namespace AlienDB_MVC.Controllers
         // Visar vald incident för redigering
         public IActionResult Edit(int id)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa/redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             Incident incident = new();
 
             using (MySqlConnection conn =
@@ -170,6 +215,19 @@ namespace AlienDB_MVC.Controllers
         [HttpPost]
         public IActionResult Edit(Incident incident)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa/redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             using (MySqlConnection conn =
                    new MySqlConnection(connectionString))
             {
@@ -212,6 +270,18 @@ namespace AlienDB_MVC.Controllers
         // Tar bort incident
         public IActionResult Delete(int id)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Admin får ta bort
+            if (HttpContext.Session.GetString("Role") != "Admin")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             using (MySqlConnection conn =
                    new MySqlConnection(connectionString))
             {

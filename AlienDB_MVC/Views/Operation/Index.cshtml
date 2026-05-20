@@ -25,12 +25,17 @@
 </div>
 
 <!-- Knapp -->
-<a class="btn btn-success mb-3"
+<!-- Bara Commander/Admin får skapa -->
+@if (Context.Session.GetString("Role") == "Admin" ||
+     Context.Session.GetString("Role") == "Commander")
+{
+    <a class="btn btn-success mb-3"
        asp-action="Create">
 
-    Skapa Operation
+        Skapa Operation
 
-</a>
+    </a>
+}
 
 <div class="search-card mb-4">
 
@@ -119,21 +124,23 @@
                 </td>
 
                 <td>
-
+                    
+                    <!-- Redigera-knapp -->
                     <a class="icon-action-btn edit-icon"
-                           asp-action="Edit"
-                           asp-route-id="@item.ID"
-                           title="Redigera">
+                       asp-action="Edit"
+                       asp-route-id="@item.ID"
+                       title="Redigera">
 
                         ✏️
 
                     </a>
-
+                    
+                    <!-- Ta bort-knapp -->
                     <a class="icon-action-btn delete-icon"
-                           asp-action="Delete"
-                           asp-route-id="@item.ID"
-                           onclick="return confirm('Är du säker på att du vill ta bort operationen?');"
-                           title="Ta bort">
+                       asp-action="Delete"
+                       asp-route-id="@item.ID"
+                       onclick="return confirm('Är du säker?');"
+                       title="Ta bort">
 
                         🗑️
 

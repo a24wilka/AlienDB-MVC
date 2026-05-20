@@ -1,17 +1,43 @@
 ﻿<!DOCTYPE html>
 <html lang="sv">
 <head>
+
+    <!-- Teckenkodning -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Responsiv design för mobil/tablet -->
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
 
-    <title>@ViewData["Title"] - AlienDB</title>
+    <!-- Titel i webbläsarfliken -->
+    <title>
+        @ViewData["Title"] - AlienDB
+    </title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/AlienDB_MVC.styles.css" asp-append-version="true" />
+    <!-- Google sci-fi font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Huvud-CSS -->
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <!-- MVC genererad CSS -->
+    <link rel="stylesheet"
+          href="~/AlienDB_MVC.styles.css"
+          asp-append-version="true" />
 </head>
 
 <body>
+
+    <!-- Animated stars background -->
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
 
     <!-- Loading Screen -->
     <div id="loader-wrapper">
@@ -81,6 +107,22 @@
                     🔭 Observationer
                 </a>
 
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Media" ? "active-link" : "")"
+                       asp-controller="Media"
+                       asp-action="Index">
+
+                    📰 Media
+
+                </a>
+
+                <a class="@(ViewContext.RouteData.Values["Controller"]?.ToString() == "EscapeReport" ? "active-link" : "")"
+                   asp-controller="EscapeReport"
+                   asp-action="Index">
+
+                    🚨 Escape Reports
+
+                </a>
+
                 <div class="sidebar-label">
                     SYSTEM
                 </div>
@@ -142,9 +184,18 @@
                         --:--:--
                     </span>
 
-                    <span class="topbar-user">
-                        Admin ▾
-                    </span>
+                    @if (Context.Session.GetString("User") != null)
+                    {
+                        <a asp-controller="Login"
+                           asp-action="Logout"
+                           class="topbar-user">
+
+                            👽 @Context.Session.GetString("User")
+                            · @Context.Session.GetString("Role")
+                            · Logout
+
+                        </a>
+                    }
 
                 </div>
             </header>

@@ -18,6 +18,9 @@
         // Totalt antal observationer
         public int ObservationCount { get; set; }
 
+        // Antal aktiva escape alerts
+        public int EscapeAlertCount { get; set; }
+
         // Senaste observationer till dashboarden
         public List<ObservationDashboard> LatestObservations { get; set; } = new();
 
@@ -26,6 +29,9 @@
 
         // Senaste loggar / aktivitet
         public List<ActivityLog> LatestLogs { get; set; } = new();
-        
+
+        public List<Media> LatestMedia { get; set; } = new();
+      
+
     }
 }

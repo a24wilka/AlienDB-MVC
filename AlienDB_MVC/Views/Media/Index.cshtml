@@ -1,0 +1,223 @@
+﻿@model List<AlienDB_MVC.Models.Media>
+
+@{
+    ViewData["Title"] = "Media";
+}
+<!-- Rubrik -->
+<div class="page-header">
+    <h1 class="page-title">
+        📰 Galactic Media Network
+    </h1>
+
+    <p class="page-subtitle">
+        Hantering av intergalaktiska nyhetskanaler och propaganda.
+    </p>
+</div>
+<!-- Knapp -->
+<!-- Bara Commander/Admin får skapa -->
+@if (Context.Session.GetString("Role") == "Admin" ||
+     Context.Session.GetString("Role") == "Commander")
+{
+    <a class="btn btn-success mb-3"
+       asp-action="Create">
+
+        Skapa Media
+
+    </a>
+}
+
+
+<div class="search-card mb-4">
+
+    <form method="get" asp-action="Index">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Sök incident..." />
+
+            </div>
+
+            <div class="col-auto">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Sök
+
+                </button>
+
+            </div>
+
+            <div class="col-auto">
+
+                <a class="btn btn-secondary"
+                   asp-action="Index">
+
+                    Rensa
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Dashboard cards -->
+<div class="dashboard-grid">
+
+    <div class="dashboard-card">
+        <h3>📡 Totala Kanaler</h3>
+        <p>@Model.Count</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>✅ Aktiva</h3>
+        <p>@Model.Count(m => m.Aktiv)</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>⚠ Propaganda Risk</h3>
+        <p>@Model.Count(m => m.Trovärdighet < 5)</p>
+    </div>
+
+</div>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+<!-- Media table -->
+<div class="table-responsive">
+
+    <table class="table table-dark table-hover">
+
+        <thead>
+            <tr>
+                <th>Titel</th>
+                <th>Typ</th>
+                <th>Språk</th>
+                <th>Ägare</th>
+                <th>Land</th>
+                <th>Trovärdighet</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>@item.Titel</td>
+
+                    <td>
+
+                        @if (item.Typ == "TV")
+                        {
+                            <span>📺 TV</span>
+                        }
+                        else if (item.Typ == "Webb")
+                        {
+                            <span>🌐 Webb</span>
+                        }
+                        else if (item.Typ == "Tidning")
+                        {
+                            <span>📰 Tidning</span>
+                        }
+                        else if (item.Typ == "Radio")
+                        {
+                            <span>📻 Radio</span>
+                        }
+                        else
+                        {
+                            <span>@item.Typ</span>
+                        }
+
+                    </td>
+
+                    <td>@item.Språk</td>
+
+                    <td>@item.Ägare</td>
+
+                    <td>@item.Land</td>
+
+                    <td>
+                        @if (item.Trovärdighet >= 8)
+                        {
+                            <span class="badge bg-success">
+                                @item.Trovärdighet / 10
+                            </span>
+                        }
+                        else if (item.Trovärdighet >= 5)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                @item.Trovärdighet / 10
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                @item.Trovärdighet / 10
+                            </span>
+                        }
+                    </td>
+
+                    <td>
+                        @if (item.Aktiv)
+                        {
+                            <span class="badge bg-success">
+                                Aktiv
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">
+                                Inaktiv
+                            </span>
+                        }
+                    </td>
+
+                    <td>
+                        
+                        <!-- Redigera-knapp -->
+                        <a class="icon-action-btn edit-icon"
+                           asp-action="Edit"
+                           asp-route-id="@item.ID"
+                           title="Redigera">
+
+                            ✏️
+
+                        </a>
+                        
+                        <!-- Ta bort-knapp -->
+                        <a class="icon-action-btn delete-icon"
+                           asp-action="Delete"
+                           asp-route-id="@item.ID"
+                           onclick="return confirm('Är du säker?');"
+                           title="Ta bort">
+
+                            🗑️
+
+                        </a>
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

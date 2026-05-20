@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AlienDB_MVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1b4a944f21e8c472fdd9acc6e47cd79ade2808ae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2df572803be2eb5ab31dad5a0f9a913305fb63db")]
 [assembly: System.Reflection.AssemblyProductAttribute("AlienDB_MVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AlienDB_MVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

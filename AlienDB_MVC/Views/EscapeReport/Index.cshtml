@@ -1,0 +1,216 @@
+﻿@model List<AlienDB_MVC.Models.EscapeReport>
+
+@{
+    ViewData["Title"] = "Escape Reports";
+}
+
+<!-- Header -->
+<div class="page-header">
+
+    <h1 class="page-title">
+        🚨 Escape Reports
+    </h1>
+
+    <p class="page-subtitle">
+        Monitoring escaped alien entities.
+    </p>
+
+</div>
+
+<!-- Dashboard cards -->
+<div class="dashboard-grid">
+
+    <div class="dashboard-card">
+        <h3>👽 Totala Rapporter</h3>
+        <p>@Model.Count</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>🚨 Escaped</h3>
+        <p>@Model.Count(r => r.Status == "Escaped")</p>
+    </div>
+
+    <div class="dashboard-card">
+        <h3>🔒 Captured</h3>
+        <p>@Model.Count(r => r.Status == "Captured")</p>
+    </div>
+
+</div>
+
+<!-- Knapp för att skapa ny escape report -->
+<!-- Bara Commander/Admin får skapa -->
+@if (Context.Session.GetString("Role") == "Admin" ||
+     Context.Session.GetString("Role") == "Commander")
+{
+    <a class="btn btn-success mb-3"
+       asp-action="Create">
+
+        Skapa Escape Report
+
+    </a>
+}
+<div class="search-card mb-4">
+
+    <form method="get" asp-action="Index">
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <input type="text"
+                       name="search"
+                       class="form-control"
+                       placeholder="Sök incident..." />
+
+            </div>
+
+            <div class="col-auto">
+
+                <button type="submit"
+                        class="btn btn-primary">
+
+                    Sök
+
+                </button>
+
+            </div>
+
+            <div class="col-auto">
+
+                <a class="btn btn-secondary"
+                   asp-action="Index">
+
+                    Rensa
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Table -->
+<div class="table-responsive">
+
+    <table class="table table-dark table-hover">
+
+        <thead>
+            <tr>
+                <th>Alien</th>
+                <th>Datum</th>
+                <th>Anledning</th>
+                <th>Resultat</th>
+                <th>Status</th>
+                <th>Plats</th>
+                <th>Danger</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        👽 @item.AlienNamn
+                    </td>
+
+                    <td>
+                        @item.Datum.ToShortDateString()
+                    </td>
+
+                    <td>
+                        @item.Anledning
+                    </td>
+
+                    <td>
+                        @item.Resultat
+                    </td>
+
+                    <td>
+
+                        @if (item.Status == "Escaped")
+                        {
+                            <span class="badge bg-danger">
+                                Escaped
+                            </span>
+                        }
+                        else if (item.Status == "Captured")
+                        {
+                            <span class="badge bg-success">
+                                Captured
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+                                Missing
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+                        🌍 @item.Plats
+                    </td>
+
+                    <td>
+
+                        @if (item.DangerLevel >= 8)
+                        {
+                            <span class="badge bg-danger">
+                                ☠ @item.DangerLevel
+                            </span>
+                        }
+                        else if (item.DangerLevel >= 5)
+                        {
+                            <span class="badge bg-warning text-dark">
+                                ⚠ @item.DangerLevel
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">
+                                ✔ @item.DangerLevel
+                            </span>
+                        }
+
+                    </td>
+
+                    <td>
+
+                        <!-- Redigera-knapp -->
+                        <a class="icon-action-btn edit-icon"
+                           asp-action="Edit"
+                           asp-route-id="@item.ID"
+                           title="Redigera">
+
+                            ✏️
+
+                        </a>
+
+                        <!-- Ta bort-knapp -->
+                        <a class="icon-action-btn delete-icon"
+                           asp-action="Delete"
+                           asp-route-id="@item.ID"
+                           onclick="return confirm('Är du säker?');"
+                           title="Ta bort">
+
+                            🗑️
+
+                        </a>
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>

@@ -4,7 +4,7 @@
     public class ObservationDashboard
     {
         public int ObservationID { get; set; }
-
+        public int ID { get; set; }
         public string? AgentNamn { get; set; }
 
         public string? AlienNamn { get; set; }

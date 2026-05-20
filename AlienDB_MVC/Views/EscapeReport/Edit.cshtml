@@ -1,0 +1,158 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model AlienDB_MVC.Models.EscapeReport
+
+@{
+    ViewData["Title"] = "Edit Escape Report";
+}
+
+<div class="form-container">
+
+    <h1 class="mb-4">
+        ✏️ Edit Escape Report
+    </h1>
+
+    <form asp-action="Edit"
+          method="post">
+
+        <!-- Alien -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Alien
+            </label>
+
+            <select asp-for="AlienID"
+                    class="form-select"
+                    asp-items="ViewBag.Aliens">
+
+                <option value="">
+                    Välj Alien
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- Datum -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Datum
+            </label>
+
+            <input asp-for="Datum"
+                   type="date"
+                   class="form-control" />
+
+        </div>
+
+        <!-- Anledning -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Anledning
+            </label>
+
+            <textarea asp-for="Anledning"
+                      class="form-control">
+            </textarea>
+
+        </div>
+
+        <!-- Resultat -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Resultat
+            </label>
+
+            <select asp-for="Resultat"
+                    class="form-select">
+
+                <option value="Lyckades">
+                    Lyckades
+                </option>
+
+                <option value="Misslyckades">
+                    Misslyckades
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- Status -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Status
+            </label>
+
+            <select asp-for="Status"
+                    class="form-select">
+
+                <option value="Escaped">
+                    Escaped
+                </option>
+
+                <option value="Captured">
+                    Captured
+                </option>
+
+                <option value="Missing">
+                    Missing
+                </option>
+
+            </select>
+
+        </div>
+
+        <!-- Plats -->
+        <div class="mb-3">
+
+            <label class="form-label">
+                Planet / Location
+            </label>
+
+            <input asp-for="Plats"
+                   class="form-control" />
+
+        </div>
+
+        <!-- Danger level -->
+        <div class="mb-4">
+
+            <label class="form-label">
+                Danger Level
+            </label>
+
+            <input asp-for="DangerLevel"
+                   type="number"
+                   min="1"
+                   max="10"
+                   class="form-control" />
+
+        </div>
+
+        <!-- Submit -->
+        <button type="submit"
+                class="btn btn-success">
+
+            🚨 Save Report
+
+        </button>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            Tillbaka
+
+        </a>
+
+    </form>
+
+</div>

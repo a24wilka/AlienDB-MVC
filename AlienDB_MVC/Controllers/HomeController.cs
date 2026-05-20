@@ -20,6 +20,14 @@ namespace AlienDB_MVC.Controllers
         // Startsidan
         public IActionResult Index()
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction(
+                    "Index",
+                    "Login");
+            }
+
             // Modell som innehåller statistik till dashboarden
             DashboardModel dashboard = new DashboardModel();
 
@@ -30,6 +38,41 @@ namespace AlienDB_MVC.Controllers
             conn.Open();
 
             // =============================================
+            // SENASTE MEDIA
+            // =============================================
+
+            string mediaQuery = @"
+    SELECT *
+    FROM Media
+    ORDER BY ID DESC
+    LIMIT 3
+";
+
+            MySqlCommand mediaCmd =
+                new MySqlCommand(mediaQuery, conn);
+
+            using (MySqlDataReader reader =
+                   mediaCmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    dashboard.LatestMedia.Add(new Media
+                    {
+                        ID = Convert.ToInt32(reader["ID"]),
+
+                        Titel = reader["Titel"].ToString(),
+
+                        Typ = reader["Typ"].ToString(),
+
+                        Ägare = reader["Ägare"].ToString(),
+
+                        Trovärdighet =
+                            Convert.ToInt32(reader["Trovärdighet"])
+                    });
+                }
+            }
+
+            // =============================================
             // Hämtar antal agenter
             // =============================================
 
@@ -37,7 +80,8 @@ namespace AlienDB_MVC.Controllers
 
             using (var cmd = new MySqlCommand(sqlAgents, conn))
             {
-                dashboard.AgentCount = Convert.ToInt32(cmd.ExecuteScalar());
+                dashboard.AgentCount =
+                    Convert.ToInt32(cmd.ExecuteScalar());
             }
 
             // =============================================
@@ -159,7 +203,23 @@ namespace AlienDB_MVC.Controllers
             {
                 dashboard.ObservationCount = Convert.ToInt32(cmd.ExecuteScalar());
             }
-      
+
+            // =============================================
+            // Escape alerts
+            // =============================================
+
+            string sqlEscapeAlerts = @"
+    SELECT COUNT(*)
+    FROM Undanflykt
+    WHERE Status = 'Escaped'
+";
+
+            using (var cmd = new MySqlCommand(sqlEscapeAlerts, conn))
+            {
+                dashboard.EscapeAlertCount =
+                    Convert.ToInt32(cmd.ExecuteScalar());
+            }
+
             // =============================================
             // Hämtar aktiva operationer
             // =============================================

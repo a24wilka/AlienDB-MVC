@@ -25,10 +25,18 @@
 </div>
 
 <!-- Knapp för att skapa ny incident -->
-<a class="btn btn-success mb-3"
+<!-- Bara Commander/Admin får skapa -->
+@if (Context.Session.GetString("Role") == "Admin" ||
+     Context.Session.GetString("Role") == "Commander")
+{
+    <a class="btn btn-success mb-3"
        asp-action="Create">
-    Skapa Incident
-</a>
+
+        Skapa Incident
+
+    </a>
+}
+
 <div class="search-card mb-4">
 
     <form method="get" asp-action="Index">
@@ -92,28 +100,30 @@
                 <td>@item.Plats</td>
                 <td>@item.Region</td>
 
-                    <td>
+                <td>
 
-                        <a class="icon-action-btn edit-icon"
-                               asp-action="Edit"
-                               asp-route-id="@item.ID"
-                               title="Redigera">
+                    <!-- Redigera-knapp -->
+                    <a class="icon-action-btn edit-icon"
+                       asp-action="Edit"
+                       asp-route-id="@item.ID"
+                       title="Redigera">
 
-                            ✏️
+                        ✏️
 
-                        </a>
+                    </a>
 
-                        <a class="icon-action-btn delete-icon"
-                               asp-action="Delete"
-                               asp-route-id="@item.ID"
-                               onclick="return confirm('Är du säker på att du vill ta bort incidenten?');"
-                               title="Ta bort">
+                    <!-- Ta bort-knapp -->
+                    <a class="icon-action-btn delete-icon"
+                       asp-action="Delete"
+                       asp-route-id="@item.ID"
+                       onclick="return confirm('Är du säker?');"
+                       title="Ta bort">
 
-                            🗑️
+                        🗑️
 
-                        </a>
+                    </a>
 
-                    </td>
+                </td>
             </tr>
         }
 

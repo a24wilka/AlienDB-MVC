@@ -16,6 +16,13 @@ namespace AlienDB_MVC.Controllers
         // =========================================
         public IActionResult Index(string search)
         {
+
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
             // Lista med agenter
             List<Agent> agenter = new();
 
@@ -90,9 +97,23 @@ namespace AlienDB_MVC.Controllers
         // =========================================
         // CREATE - GET
         // =========================================
+
         // Visar formuläret för att skapa agent
         public IActionResult Create()
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             return View();
         }
 
@@ -103,6 +124,19 @@ namespace AlienDB_MVC.Controllers
         [HttpPost]
         public IActionResult Create(Agent agent)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får skapa
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             try
             {
                 using (MySqlConnection conn =
@@ -174,7 +208,22 @@ namespace AlienDB_MVC.Controllers
         // Visar vald agent för redigering
         public IActionResult Edit(int id)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             Agent agent = new();
+
+            // Resten av edit-koden här...
 
             using (MySqlConnection conn =
                    new MySqlConnection(connectionString))
@@ -245,6 +294,19 @@ namespace AlienDB_MVC.Controllers
         [HttpPost]
         public IActionResult Edit(Agent agent)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Commander/Admin får redigera
+            if (HttpContext.Session.GetString("Role") != "Admin" &&
+                HttpContext.Session.GetString("Role") != "Commander")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+
             try
             {
                 using (MySqlConnection conn =
@@ -313,6 +375,18 @@ namespace AlienDB_MVC.Controllers
         // Tar bort agent
         public IActionResult Delete(int id)
         {
+            // Kontroll om användaren är inloggad
+            if (HttpContext.Session.GetString("User") == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+
+            // Bara Admin får ta bort
+            if (HttpContext.Session.GetString("Role") != "Admin")
+            {
+                return RedirectToAction("AccessDenied", "Login");
+            }
+        
             try
             {
                 using (MySqlConnection conn =

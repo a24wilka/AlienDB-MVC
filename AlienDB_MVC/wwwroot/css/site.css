@@ -1,7 +1,7 @@
 body {
     background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.22), transparent 28%), radial-gradient(circle at bottom right, rgba(124, 58, 237, 0.20), transparent 32%), linear-gradient(135deg, #030712 0%, #08111f 45%, #020617 100%);
     color: #e5e7eb;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Orbitron', sans-serif;
     min-height: 100vh;
     padding-bottom: 0 !important;
 }
@@ -378,10 +378,11 @@ h1, h2, h3 {
 }
 /* Aktiv sidlänk */
 .sidebar-nav a.active-link {
-    background: linear-gradient( 135deg, rgba(37,99,235,0.22), rgba(124,58,237,0.22) );
+    background: linear-gradient( 135deg, rgba(37,99,235,0.28), rgba(124,58,237,0.30));
     color: white;
-    border: 1px solid rgba(124,58,237,0.35);
-    box-shadow: 0 0 30px rgba(99,102,241,0.18);
+    border: 1px solid rgba(124,58,237,0.45);
+    box-shadow: 0 0 12px rgba(99,102,241,0.28), 0 0 30px rgba(124,58,237,0.18), inset 0 0 12px rgba(255,255,255,0.04);
+    transform: translateX(4px);
 }
 /* Sidebar icons */
 .sidebar-nav a {
@@ -404,8 +405,24 @@ h1, h2, h3 {
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
+}
+
+/* Tablet */
+@media (max-width: 1100px) {
+
+    .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ========================================
@@ -1228,4 +1245,155 @@ h1, h2, h3 {
     background: rgba(239,68,68,0.18);
     color: #f87171;
     border: 1px solid rgba(239,68,68,0.35);
+}
+/* =========================================
+   ALIEN LOGIN
+========================================= */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, rgba(0,255,170,0.15), transparent 40%), linear-gradient( 135deg, #050816, #0b1020, #050816);
+    padding: 20px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    background: rgba(15,20,35,0.85);
+    border: 1px solid rgba(0,255,170,0.25);
+    border-radius: 20px;
+    padding: 40px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 0 20px rgba(0,255,170,0.15), 0 0 60px rgba(0,255,170,0.08);
+    animation: fadeIn 0.8s ease;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+    .login-header h1 {
+        color: #00ffaa;
+        font-size: 2.2rem;
+        font-weight: 700;
+        text-shadow: 0 0 10px rgba(0,255,170,0.7);
+    }
+
+    .login-header p {
+        color: #9ca3af;
+        margin-top: 10px;
+    }
+
+.login-card .form-control {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 12px;
+}
+
+    .login-card .form-control:focus {
+        border-color: #00ffaa;
+        box-shadow: 0 0 10px rgba(0,255,170,0.4);
+        background: rgba(255,255,255,0.08);
+    }
+
+.login-card .btn-success {
+    background: linear-gradient( 135deg, #00ffaa, #00c896);
+    border: none;
+    font-weight: bold;
+    padding: 12px;
+    transition: 0.3s;
+}
+
+    .login-card .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(0,255,170,0.5);
+    }
+
+/* Fade animation */
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ========================================
+   ANIMATED SPACE BACKGROUND
+======================================== */
+
+.stars,
+.stars2,
+.stars3 {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Small stars */
+.stars {
+    background-image: radial-gradient(2px 2px at 20px 30px, white, transparent), radial-gradient(2px 2px at 100px 150px, #60a5fa, transparent), radial-gradient(1.5px 1.5px at 200px 80px, #c084fc, transparent), radial-gradient(2px 2px at 300px 200px, white, transparent);
+    background-size: 400px 400px;
+    animation: moveStars 120s linear infinite;
+    opacity: 0.5;
+}
+
+/* Medium stars */
+.stars2 {
+    background-image: radial-gradient(2px 2px at 50px 60px, #93c5fd, transparent), radial-gradient(2px 2px at 250px 120px, #a78bfa, transparent), radial-gradient(2px 2px at 180px 250px, white, transparent);
+    background-size: 600px 600px;
+    animation: moveStars 180s linear infinite;
+    opacity: 0.35;
+}
+
+/* Large glow stars */
+.stars3 {
+    background-image: radial-gradient(3px 3px at 120px 90px, rgba(255,255,255,0.8), transparent), radial-gradient(4px 4px at 400px 300px, rgba(96,165,250,0.7), transparent);
+    background-size: 800px 800px;
+    animation: moveStars 240s linear infinite;
+    opacity: 0.25;
+}
+
+/* Animation */
+@keyframes moveStars {
+
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-1000px);
+    }
+}
+/* ========================================
+   DASHBOARD SECTIONS
+======================================== */
+
+.dashboard-section {
+    margin-top: 42px;
+}
+
+    .dashboard-section:first-child {
+        margin-top: 0;
+    }
+
+/* Section headers */
+.section-title {
+    margin-bottom: 22px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: white;
+    letter-spacing: 0.5px;
 }

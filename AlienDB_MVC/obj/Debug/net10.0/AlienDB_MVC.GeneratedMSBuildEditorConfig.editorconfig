@@ -8,13 +8,14 @@ build_property.ProjectTypeGuids =
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AlienDB_MVC
 build_property.RootNamespace = AlienDB_MVC
 build_property.ProjectDir = C:\Users\Willl\source\repos\AlienDB_MVC\AlienDB_MVC\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
-build_property.RazorLangVersion = 9.0
+build_property.RazorLangVersion = 10.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = C:\Users\Willl\source\repos\AlienDB_MVC\AlienDB_MVC
@@ -50,6 +51,18 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWxpZW5cSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/EscapeReport/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXNjYXBlUmVwb3J0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/EscapeReport/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXNjYXBlUmVwb3J0XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/EscapeReport/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXNjYXBlUmVwb3J0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -68,6 +81,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Incident/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSW5jaWRlbnRcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Login/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQWNjZXNzRGVuaWVkLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Login/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Media/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWFcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Media/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWFcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Media/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWFcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Willl/source/repos/AlienDB_MVC/AlienDB_MVC/Views/Observation/Create.cshtml]
