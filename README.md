@@ -222,6 +222,10 @@ appsettings.json
 
 Start the project from Visual Studio.
 
+6. Rename appsettings.example.json to appsettings.json
+
+7. Update the connection string with your own MySQL credentials
+
 ---
 
 # 📸 Screenshots
