@@ -1,1 +1,14 @@
-.vs/ 
+.vs/
+
+# App settings
+appsettings.Development.json
+AlienDB_MVC/appsettings.json
+AlienDB_MVC/appsettings.Development.json
+
+# Build files
+bin/
+obj/
+
+# User files
+*.user
+*.suo
